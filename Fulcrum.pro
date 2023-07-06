@@ -150,6 +150,16 @@ contains(CONFIG, config_endian_big) {
 }
 # /GIT_COMMIT=
 
+# robin-hood-hashing
+!contains(CONFIG, config_without_bundled_robin_hood) {
+    # Robin Hood unordered_flat_map implememntation (single header and MUCH more efficient than unordered_map!)
+    HEADERS += robin_hood/robin_hood.h
+    INCLUDEPATH += src/robin_hood/
+} else {
+    message("robin-hood-hashing: Using CLI override")
+}
+# /robin-hood-hashing
+
 # simdjson
 contains(LIBS, -lsimdjson) {
     message("simdjson: Using CLI override")
@@ -407,9 +417,6 @@ HEADERS += \
     Version.h \
     WebSocket.h \
     ZmqSubNotifier.h
-
-# Robin Hood unordered_flat_map implememntation (single header and MUCH more efficient than unordered_map!)
-HEADERS += robin_hood/robin_hood.h
 
 RESOURCES += \
     resources.qrc
